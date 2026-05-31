@@ -17,6 +17,7 @@ Ruxy's official Discord bot.
 | Command | Description       |
 | ------- | ----------------- |
 | `/ping` | Check bot latency |
+| `/poll` | Make a poll (max of 10 options) |
 
 ### User
 
