@@ -2,6 +2,7 @@ import discord
 from discord import app_commands
 import os
 import sys
+from config import MOD_ROLE_ID, ADMIN_ROLE_ID
 
 from config import OWNERS
 

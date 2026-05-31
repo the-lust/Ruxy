@@ -1,6 +1,7 @@
 import discord
 import blacklist
-from config import MOD_ROLE_ID, ADMIN_ROLE_ID
+from config import MOD_ROLE_ID, ADMIN_ROLE_ID, MUTE_ROLE_ID
+from datetime import timedelta
 
 # only mods and up can use it
 # blacklist = can't use the bot
@@ -52,3 +53,86 @@ def setup(tree, client):
         await interaction.response.send_message(
             f"{user.name} has been successfully unblacklisted"
         )
+
+    @tree.command(
+        name="mute",
+        description="Mute a user"
+    )
+    async def mute(
+        interaction: discord.Interaction,
+        user: discord.Member,
+        minutes: int | None = None
+    ):
+        author = interaction.user
+
+        if not (
+            author.guild_permissions.administrator
+            or any(role.id in {MOD_ROLE_ID, ADMIN_ROLE_ID} for role in author.roles)
+        ):
+            await interaction.response.send_message(
+                "You do not have permission to use this command.",
+                ephemeral=True
+            )
+            return
+
+        try:
+            if minutes is None:
+                await user.timeout(
+                    timedelta(days=28),
+                    reason=f"Muted for 28 days by {author}"
+                )
+
+                await interaction.response.send_message(
+                    f"{user.mention} has been muted for 28 days."
+                )
+            else:
+                await user.timeout(
+                    timedelta(minutes=minutes),
+                    reason=f"Muted by {author}"
+                )
+
+                await interaction.response.send_message(
+                    f"{user.mention} has been muted for {minutes} minute(s)."
+                )
+
+        except discord.Forbidden:
+            await interaction.response.send_message(
+                "I don't have permission to mute that user.",
+                ephemeral=True
+            )
+
+    @tree.command(
+        name="unmute",
+        description="Unmute a user"
+    )
+    async def unmute(
+        interaction: discord.Interaction,
+        user: discord.Member
+    ):
+        author = interaction.user
+
+        if not (
+            author.guild_permissions.administrator
+            or any(role.id in {MOD_ROLE_ID, ADMIN_ROLE_ID} for role in author.roles)
+        ):
+            await interaction.response.send_message(
+                "You do not have permission to use this command.",
+                ephemeral=True
+            )
+            return
+
+        try:
+            await user.timeout(
+                None,
+                reason=f"Unmuted by {author}"
+            )
+
+            await interaction.response.send_message(
+                f"{user.mention} has been unmuted."
+            )
+
+        except discord.Forbidden:
+            await interaction.response.send_message(
+                "I don't have permission to unmute that user.",
+                ephemeral=True
+            )

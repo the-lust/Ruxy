@@ -37,6 +37,8 @@ Ruxy's official Discord bot.
 | ------------- | ------------------------------------- |
 | `/blacklist`  | Blacklists a user from using the bot  |
 | `/unblacklist`| Unblacklists a user                   |
+| `/mute`       | mutes a user                          |
+| `/unmute`     | unmutes a user                        |
 
 ### Owner
 
@@ -44,7 +46,6 @@ Ruxy's official Discord bot.
 | ----------- | -------------------------- |
 | `/shutdown` | Shut down the bot          |
 | `/restart`  | Restart the bot            |
-| `/sync`     | Synchronize slash commands |
 
 ## License
 
