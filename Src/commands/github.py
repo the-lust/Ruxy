@@ -4,7 +4,7 @@ from discord import app_commands
 
 # if the value starts with "$", then the following should be interpreted as a key for this
 # if a key does not exist, https://github.com/rux-lang/<key> gets checked.
-# links in this directory are assumed to be correct and won't be checked.
+# aliases & links in this directory are assumed to be correct and won't be checked.
 # value must end with "/{owner}/repo" if it's not an alias -> no branches
 REPOS = {
     "rux": "https://github.com/rux-lang/Rux",
@@ -15,9 +15,16 @@ REPOS = {
     "macos": "https://github.com/rux-lang/MacOS",
     "bot": "https://github.com/rux-lang/Ruxy",
     "website": "https://github.com/rux-lang/Web",
-    "illumos": "https://github.com/rux-lang/Illumos"
+    "illumos": "https://github.com/rux-lang/Illumos",
+    "tests": "https://github.com/rux-lang/Tests",
+    "tutorials": "https://github.com/rux-lang/Tutorials",
+    "zed": "https://github.com/rux-lang/Zed",
+    "vscode": "https://github.com/rux-lang/VSCode",
+    "sublime": "https://github.com/rux-lang/SublimeText",
 
     # alias
+    "vsc": "$vscode",
+    "sublimetext": "$sublime",
 }
 
 async def repo_autocomplete(interaction: discord.Interaction, current: str):
@@ -30,7 +37,12 @@ async def repo_autocomplete(interaction: discord.Interaction, current: str):
         app_commands.Choice(name="MacOS Library", value="macos"),
         app_commands.Choice(name="Illumos Library", value="illumos"),
         app_commands.Choice(name="Ruxy Bot", value="bot"),
-        app_commands.Choice(name="Rux Website", value="website")
+        app_commands.Choice(name="Rux Website", value="website"),
+        app_commands.Choice(name="Rux (Tests)", value="tests"),
+        app_commands.Choice(name="Tutorials", value="tutorials"),
+        app_commands.Choice(name="Zed (Extension)", value="zed"),
+        app_commands.Choice(name="VS Code (Extension)", value="vscode"),
+        app_commands.Choice(name="Sublime Text (Extension)", value="sublime")
     ]
 
 
@@ -43,16 +55,17 @@ def setup(tree, client):
     @app_commands.autocomplete(repository=repo_autocomplete)
     async def repo(
         interaction: discord.Interaction,
-        repository: str = "rux"
+        repository: str,
+        branch: str = "main"
     ):
         
-        deferred = False
-
-        url = REPOS.get(repository, "")
-        print(f"Start: {url}")
+        deferred: bool = False
+        repo_name: str = repository
+        branch_name: str = ""
+        url: str = REPOS.get(repository, "")
         if url.startswith("$"): # alias
-            url = REPOS.get(url.removeprefix("$"))
-            print(f"Alias: {url}")
+            repo_name = f"{url.removeprefix("$")} (alias `{repository}`)"
+            url = REPOS.get(url.removeprefix("$"), "")
         elif url == "": # empty -> check url
             r_url = f"https://api.github.com/repos/rux-lang/{repository}"
             await interaction.response.defer()
@@ -62,37 +75,31 @@ def setup(tree, client):
             r = requests.get(r_url, headers={"User-Agent": "repo-check"})
             if r.status_code == 200:
                 url = f"https://github.com/rux-lang/{repository}"
-                print(f"Repo: {url}")
-            elif r.status_code == 404:
-                # check for any branch with that name
-                repos = [r for r in REPOS.values() if not r.startswith("$")]
-
-                for repo in repos:
-                    repo_parts = repo.split("/")
-                    # "{owner}/{repo}"
-                    repo_url = repo_parts[-2] + "/" + repo_parts[-1] # [-2] = owner, [-1] = repo.
-
-                    r_url = f"https://api.github.com/repos/{repo_url}/branches/{repository}"
-                    r = requests.get(r_url, headers={"User-Agent": "repo-branch-checker"})
-                    if r.status_code == 200:
-                        url = f"https://github.com/{repo_url}/tree/{repository}"
-                        print(f"Branch: {url}")
-                        break # break the loop
-
-
-        print(f"Done: {url}")
-        if url == "":
-            if deferred:
-                await interaction.followup.send(
-                    "Unknown repository.",
-                    ephemeral=True
-                )
             else:
-                await interaction.response.send_message(
-                    "Unknown repository.",
+                await interaction.followup.send(
+                    "This repository does not exist.",
                     ephemeral=True
                 )
-                return
+        
+        if branch != "main":
+            if not deferred:
+                await interaction.response.defer()
+                deferred = True
+
+            repo_parts = url.split("/")
+            # "{owner}/{repo}"
+            repo_url = repo_parts[-2] + "/" + repo_parts[-1]
+            
+            r_url = f"https://api.github.com/repos/{repo_url}/branches/{branch}"
+            r = requests.get(r_url, headers={"User-Agent": "repo-branch-checker"})
+            if r.status_code == 200:
+                url = f"https://github.com/{repo_url}/tree/{branch}"
+                branch_name = branch
+            else:
+                await interaction.followup.send(
+                    f"Repository `{repository}` has no branch `{branch}`",
+                    ephemeral=True
+                )
 
         view = discord.ui.View()
 
@@ -103,9 +110,11 @@ def setup(tree, client):
             )
         )
 
+        branch_string: str = f"\nBranch: **{branch_name}**" if branch_name != "" else ""
+
         embed = discord.Embed(
             title="Repository",
-            description=f"Repository: **{repository}**",
+            description=f"Repository: **{repo_name}**{branch_string}",
             color=discord.Color.blurple()
         )
 
