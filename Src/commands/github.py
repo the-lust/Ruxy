@@ -58,13 +58,15 @@ def setup(tree, client):
         repository: str,
         branch: str = "main"
     ):
-        
+        if repository == "67":
+            await interaction.response.send_message("You don't deserve the bot's functionality")
+            return
         deferred: bool = False
         repo_name: str = repository
         branch_name: str = ""
         url: str = REPOS.get(repository, "")
         if url.startswith("$"): # alias
-            repo_name = f"{url.removeprefix("$")} (alias `{repository}`)"
+            repo_name = f"{url.removeprefix('$')} (alias `{repository}`)"
             url = REPOS.get(url.removeprefix("$"), "")
         elif url == "": # empty -> check url
             r_url = f"https://api.github.com/repos/rux-lang/{repository}"
@@ -80,14 +82,23 @@ def setup(tree, client):
                     "This repository does not exist.",
                     ephemeral=True
                 )
+                return
         
         if branch != "main":
             if not deferred:
                 await interaction.response.defer()
                 deferred = True
 
-            repo_parts = url.split("/")
-            # "{owner}/{repo}"
+            repo_parts = url.strip("/").split("/")
+
+            if len(repo_parts) < 2:
+                print(url)
+                print(repo_parts)
+                await interaction.response.send_message(
+                    "Invalid repository URL."
+                )
+                return
+
             repo_url = repo_parts[-2] + "/" + repo_parts[-1]
             
             r_url = f"https://api.github.com/repos/{repo_url}/branches/{branch}"
