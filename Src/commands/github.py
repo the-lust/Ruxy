@@ -10,14 +10,8 @@ from utility import is_jailed
 # value must end with "/{owner}/repo" if it's not an alias -> no branches
 REPOS = {
     "rux": "https://github.com/rux-lang/Rux",
-    "std": "https://github.com/rux-lamg/Std",
-    "windows": "https://github.com/rux-lang/Windows",
-    "linux": "https://github.com/rux-lang/Linux",
-    "bsd": "https://github.com/rux-lang/BSD",
-    "macos": "https://github.com/rux-lang/MacOS",
     "bot": "https://github.com/rux-lang/Ruxy",
     "website": "https://github.com/rux-lang/Web",
-    "illumos": "https://github.com/rux-lang/Illumos",
     "tests": "https://github.com/rux-lang/Tests",
     "tutorials": "https://github.com/rux-lang/Tutorials",
     "zed": "https://github.com/rux-lang/Zed",
@@ -32,12 +26,6 @@ REPOS = {
 async def repo_autocomplete(interaction: discord.Interaction, current: str):
     return [
         app_commands.Choice(name="Rux (Compiler)", value="rux"),
-        app_commands.Choice(name="Standard Library", value="std"),
-        app_commands.Choice(name="Windows Library", value="windows"),
-        app_commands.Choice(name="Linux Library", value="linux"),
-        app_commands.Choice(name="BSD Library", value="bsd"),
-        app_commands.Choice(name="MacOS Library", value="macos"),
-        app_commands.Choice(name="Illumos Library", value="illumos"),
         app_commands.Choice(name="Ruxy Bot", value="bot"),
         app_commands.Choice(name="Rux Website", value="website"),
         app_commands.Choice(name="Rux (Tests)", value="tests"),
@@ -157,3 +145,76 @@ def setup(tree, client):
                 embed=embed,
                 view=view
             )
+    
+    @tree.command(
+        name="package",
+        description="Get a link to a Rux package"
+    )
+    async def package(
+        interaction: discord.Interaction,
+        package: str,
+    ):
+        if package == "67":
+            if (not blacklist.is_blacklisted(interaction.user.id)):
+                blacklist.blacklist_user(interaction.user.id)
+            await interaction.response.send_message("You don't deserve the bot's functionality")
+            return
+        elif blacklist.is_blacklisted(interaction.user.id):
+            await interaction.response.send_message("You are blacklisted")
+            return
+        elif (is_jailed(interaction)):
+            await interaction.response.send_message("You are in jail")
+            return
+
+
+        await interaction.response.defer()
+
+        REGISTRY_URL: str = "https://raw.githubusercontent.com/rux-lang/Registry/refs/heads/main/Packages.json"
+
+        r: requests.Response = requests.get(REGISTRY_URL)
+        if r.status_code != 200:
+            await interaction.followup.send(
+                "Failed to get registry packages!",
+                ephemeral=True
+            )
+            return
+        
+        package = package.lower()
+
+        packages: dict[str, str] = r.json()
+        packages = {k.lower(): v for k, v in packages.items()}
+
+        if package not in packages.keys():
+            await interaction.followup.send(
+                "Couldn't find this package!",
+                ephemeral=True
+            )
+            return
+        
+        url: str = packages[package]
+
+        view = discord.ui.View()
+
+        view.add_item(
+            discord.ui.Button(
+                label=f"Open {package}",
+                url=url
+            )
+        )
+
+        embed: discord.Embed = discord.Embed(
+            title="Package",
+            description=f"Package: **{package}**",
+            color=discord.Color.blurple()
+        )
+
+        embed.add_field(
+            name="URL",
+            value=url,
+            inline=False
+        )
+
+        await interaction.followup.send(
+            embed=embed,
+            view=view
+        )
