@@ -48,6 +48,14 @@ Ruxy's official Discord bot.
 | `/shutdown` | Shut down the bot          |
 | `/restart`  | Restart the bot            |
 
+### Fun
+
+| Command         | Description                               |
+| --------------- | ----------------------------------------- |
+| `/self-timeout` | Timeout the member itself specified time  |
+| `/joke`         | Sends a random joke                       |
+
+
 ## License
 
 Licensed under the MIT License.
