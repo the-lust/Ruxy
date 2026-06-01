@@ -2,6 +2,7 @@ import discord
 import blacklist
 from config import MOD_ROLE_ID, ADMIN_ROLE_ID, MUTE_ROLE_ID
 from datetime import timedelta
+from discord.ext import commands
 
 # only mods and up can use it
 # blacklist = can't use the bot

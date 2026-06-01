@@ -49,15 +49,7 @@ def setup(tree, client):
         branch: str = "main"
     ):
         if repository == "67":
-            if (not blacklist.is_blacklisted(interaction.user.id)):
-                blacklist.blacklist_user(interaction.user.id)
             await interaction.response.send_message("You don't deserve the bot's functionality")
-            return
-        elif blacklist.is_blacklisted(interaction.user.id):
-            await interaction.response.send_message("You are blacklisted")
-            return
-        elif (is_jailed(interaction)):
-            await interaction.response.send_message("You are in jail")
             return
 
 
@@ -155,15 +147,7 @@ def setup(tree, client):
         package: str,
     ):
         if package == "67":
-            if (not blacklist.is_blacklisted(interaction.user.id)):
-                blacklist.blacklist_user(interaction.user.id)
             await interaction.response.send_message("You don't deserve the bot's functionality")
-            return
-        elif blacklist.is_blacklisted(interaction.user.id):
-            await interaction.response.send_message("You are blacklisted")
-            return
-        elif (is_jailed(interaction)):
-            await interaction.response.send_message("You are in jail")
             return
 
 
