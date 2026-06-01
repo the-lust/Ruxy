@@ -137,3 +137,22 @@ def setup(tree, client):
                 "I don't have permission to unmute that user.",
                 ephemeral=True
             )
+
+    @tree.command(
+        name="say",
+        description="say something",
+    )
+    async def say(interaction: discord.Interaction, message: str):
+        if not any(role.id in (MOD_ROLE_ID, ADMIN_ROLE_ID) for role in interaction.user.roles) and False:
+            await interaction.response.send_message(
+                "No permission.",
+                ephemeral=True
+            )
+            return
+        
+        await interaction.channel.send(
+            message
+        )
+
+
+        await interaction.response.send_message("Success!", ephemeral=True)
