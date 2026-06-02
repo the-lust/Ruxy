@@ -143,7 +143,7 @@ def setup(tree, client):
         description="say something",
     )
     async def say(interaction: discord.Interaction, message: str):
-        if not any(role.id in (MOD_ROLE_ID, ADMIN_ROLE_ID) for role in interaction.user.roles) and False:
+        if not any(role.id in (MOD_ROLE_ID, ADMIN_ROLE_ID) for role in interaction.user.roles):
             await interaction.response.send_message(
                 "No permission.",
                 ephemeral=True
