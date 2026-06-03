@@ -1,0 +1,219 @@
+[2026-05-31 22:10:57] ERROR    discord.app_commands.tree | Ignoring exception in command 'about'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 858, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\RUX-WORK\Ruxy-v4\cogs\utility.py", line 34, in about
+    e = embeds.about(
+        version=BOT_VERSION,
+    ...<2 lines>...
+        latency_ms=round(self.client.latency * 1000),
+    )
+  File "D:\RUX-WORK\Ruxy-v4\services\embeds.py", line 214, in about
+    e = base(
+        title=f"  {BOT_NAME} v{version}",
+        description=description,
+    )
+  File "D:\RUX-WORK\Ruxy-v4\services\embeds.py", line 36, in base
+    icon_url=footer_icon or discord.Embed.Empty,
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Embed' has no attribute 'Empty'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 884, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 877, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'about' raised an exception: AttributeError: type object 'Embed' has no attribute 'Empty'
+[2026-06-01 08:30:41] ERROR    discord.app_commands.tree | Ignoring exception in command 'reload'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 881, in _invoke_with_namespace
+    raise CheckFailure(f'The check functions for command {self.name!r} failed.')
+discord.app_commands.errors.CheckFailure: The check functions for command 'reload' failed.
+[2026-06-01 09:12:20] ERROR    discord.app_commands.tree | Ignoring exception in command 'sync'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 881, in _invoke_with_namespace
+    raise CheckFailure(f'The check functions for command {self.name!r} failed.')
+discord.app_commands.errors.CheckFailure: The check functions for command 'sync' failed.
+[2026-06-01 09:35:13] ERROR    discord.app_commands.tree | Ignoring exception in command 'userinfo'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 858, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\RUX-WORK\Ruxy-v4\cogs\userinfo.py", line 28, in userinfo
+    await interaction.response.send_message(view=cv2.profile_message(target))
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 1051, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.content: Must be between 1 and 4000 in length.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 884, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 877, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'userinfo' raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.content: Must be between 1 and 4000 in length.
+[2026-06-01 10:20:04] ERROR    discord.app_commands.tree | Ignoring exception in command 'sync'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 881, in _invoke_with_namespace
+    raise CheckFailure(f'The check functions for command {self.name!r} failed.')
+discord.app_commands.errors.CheckFailure: The check functions for command 'sync' failed.
+[2026-06-01 10:20:26] ERROR    discord.app_commands.tree | Ignoring exception in command 'userinfo'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 858, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\userinfo.py", line 28, in userinfo
+    await interaction.response.send_message(view=cv2.profile_message(target))
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 1051, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.content: Must be between 1 and 4000 in length.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 884, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 877, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'userinfo' raised an exception: HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.content: Must be between 1 and 4000 in length.
+[2026-06-01 10:31:12] ERROR    discord.ui.view  | Ignoring exception in view <RRView timeout=60 children=2> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='  Pull the Trigger!' emoji=<PartialEmoji animated=False name='🔫' id=None> row=None sku_id=None id=None>
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 555, in _scheduled_task
+    await item.callback(interaction)
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\fun.py", line 166, in _on_pull
+    await interaction.followup.send(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        view=build(
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        delete_after=3,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Webhook.send() got an unexpected keyword argument 'delete_after'
+[2026-06-01 10:31:15] ERROR    discord.ui.view  | Ignoring exception in view <RRView timeout=60 children=2> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='  Pull the Trigger!' emoji=<PartialEmoji animated=False name='🔫' id=None> row=None sku_id=None id=None>
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 555, in _scheduled_task
+    await item.callback(interaction)
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\fun.py", line 166, in _on_pull
+    await interaction.followup.send(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        view=build(
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        delete_after=3,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Webhook.send() got an unexpected keyword argument 'delete_after'
+[2026-06-01 10:31:18] ERROR    discord.ui.view  | Ignoring exception in view <RRView timeout=60 children=2> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='  Pull the Trigger!' emoji=<PartialEmoji animated=False name='🔫' id=None> row=None sku_id=None id=None>
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 555, in _scheduled_task
+    await item.callback(interaction)
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\fun.py", line 166, in _on_pull
+    await interaction.followup.send(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        view=build(
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        delete_after=3,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Webhook.send() got an unexpected keyword argument 'delete_after'
+[2026-06-01 10:31:20] ERROR    discord.ui.view  | Ignoring exception in view <RRView timeout=60 children=2> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='  Pull the Trigger!' emoji=<PartialEmoji animated=False name='🔫' id=None> row=None sku_id=None id=None>
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 555, in _scheduled_task
+    await item.callback(interaction)
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\fun.py", line 166, in _on_pull
+    await interaction.followup.send(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        view=build(
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        delete_after=3,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Webhook.send() got an unexpected keyword argument 'delete_after'
+[2026-06-01 10:31:21] ERROR    discord.ui.view  | Ignoring exception in view <RRView timeout=60 children=2> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='  Pull the Trigger!' emoji=<PartialEmoji animated=False name='🔫' id=None> row=None sku_id=None id=None>
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 555, in _scheduled_task
+    await item.callback(interaction)
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\fun.py", line 166, in _on_pull
+    await interaction.followup.send(
+          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        view=build(
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        delete_after=3,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Webhook.send() got an unexpected keyword argument 'delete_after'
+[2026-06-01 11:06:20] ERROR    discord.app_commands.tree | Ignoring exception in command 'sync'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 881, in _invoke_with_namespace
+    raise CheckFailure(f'The check functions for command {self.name!r} failed.')
+discord.app_commands.errors.CheckFailure: The check functions for command 'sync' failed.
+[2026-06-01 11:12:49] ERROR    discord.app_commands.tree | Ignoring exception in command 'userinfo'
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 858, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\RUX-WORK\PRS\Ruxy-v4\cogs\userinfo.py", line 28, in userinfo
+    await interaction.response.send_message(view=cv2.profile_message(target))
+                                                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\RUX-WORK\PRS\Ruxy-v4\services\cv2.py", line 126, in profile_message
+    contents.append(Media(url, height=28, width=28))
+                    ^^^^^
+NameError: name 'Media' is not defined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1297, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 884, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rocha\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 877, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'userinfo' raised an exception: NameError: name 'Media' is not defined
